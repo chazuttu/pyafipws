@@ -10,16 +10,16 @@
 # or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 
-"""M�dulo para obtener CAE/CAEA, c�digo de autorizaci�n electr�nico webservice
-WSFEv1 de AFIP (Factura Electr�nica Nacional - Proyecto Version 1 - 2.12)
-Seg�n RG 2485/08, RG 2757/2010, RG 2904/2010 y RG2926/10 (CAE anticipado),
+"""Módulo para obtener CAE/CAEA, código de autorización electrónico webservice
+WSFEv1 de AFIP (Factura Electrónica Nacional - Proyecto Version 1 - 2.12)
+Según RG 2485/08, RG 2757/2010, RG 2904/2010 y RG2926/10 (CAE anticipado),
 RG 3067/2011 (RS - Monotributo), RG 3571/2013 (Responsables inscriptos IVA),
 RG 3668/2014 (Factura A IVA F.8001), RG 3749/2015 (R.I. y exentos)
-RG 4004-E Alquiler de inmuebles con destino casa habitaci�n).
+RG 4004-E Alquiler de inmuebles con destino casa habitación).
 RG 4109-E Venta de bienes muebles registrables.
-RG 4291/2018 R�gimen especial de emisi�n y almacenamiento electr�nico
-RG 4367/2018 R�gimen de Facturas de Cr�dito Electr�nicas MiPyMEs Ley 27.440
-M�s info: http://www.sistemasagiles.com.ar/trac/wiki/ProyectoWSFEv1
+RG 4291/2018 Régimen especial de emisión y almacenamiento electrónico
+RG 4367/2018 Régimen de Facturas de Crédito Electrónicas MiPyMEs Ley 27.440
+Más info: http://www.sistemasagiles.com.ar/trac/wiki/ProyectoWSFEv1
 """
 
 __author__ = "Mariano Reingart <reingart@gmail.com>"
@@ -32,8 +32,8 @@ import os
 import sys
 from .utils import verifica, inicializar_y_capturar_excepciones, BaseWS, get_install_dir
 
-HOMO = False                    # solo homologaci�n
-TYPELIB = False                 # usar librer�a de tipos (TLB)
+HOMO = False                    # solo homologación
+TYPELIB = False                 # usar librería de tipos (TLB)
 LANZAR_EXCEPCIONES = False      # valor por defecto: True
 
 #WSDL = "https://www.sistemasagiles.com.ar/simulador/wsfev1/call/soap?WSDL=None"
@@ -42,7 +42,7 @@ WSDL = "https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL"
 
 
 class WSFEv1(BaseWS):
-    "Interfaz para el WebService de Factura Electr�nica Version 1 - 2.12"
+    "Interfaz para el WebService de Factura Electrónica Version 1 - 2.12"
     _public_methods_ = ['CrearFactura', 'AgregarIva', 'CAESolicitar',
                         'AgregarTributo', 'AgregarCmpAsoc', 'AgregarOpcional',
                         'AgregarComprador',
@@ -87,7 +87,7 @@ class WSFEv1(BaseWS):
     # Variables globales para BaseWS:
     HOMO = HOMO
     WSDL = WSDL
-    Version = "%s %s" % (__version__, HOMO and 'Homologaci�n' or '')
+    Version = "%s %s" % (__version__, HOMO and 'Homologación' or '')
     Reprocesar = True   # recuperar automaticamente CAE emitidos
     LanzarExcepciones = LANZAR_EXCEPCIONES
     factura = None
@@ -128,7 +128,7 @@ class WSFEv1(BaseWS):
         self.AuthServerStatus = result.get('AuthServer')
         return True
 
-    # los siguientes m�todos no est�n decorados para no limpiar propiedades
+    # los siguientes métodos no están decorados para no limpiar propiedades
 
     def CrearFactura(self, concepto=1, tipo_doc=80, nro_doc="", tipo_cbte=1, punto_vta=0,
             cbt_desde=0, cbt_hasta=0, imp_total=0.00, imp_tot_conc=0.00, imp_neto=0.00,
@@ -138,7 +138,7 @@ class WSFEv1(BaseWS):
             ):
 
         "Creo un objeto factura (interna)"
-        # Creo una factura electronica de exportaci�n
+        # Creo una factura electronica de exportación
         fact = {'tipo_doc': tipo_doc, 'nro_doc': nro_doc,
                 'tipo_cbte': tipo_cbte, 'punto_vta': punto_vta,
                 'cbt_desde': cbt_desde, 'cbt_hasta': cbt_hasta,
@@ -210,7 +210,7 @@ class WSFEv1(BaseWS):
 
     def ObtenerCampoFactura(self, *campos):
         "Obtener el valor devuelto de AFIP para un campo de factura"
-        # cada campo puede ser una clave string (dict) o una posici�n (list)
+        # cada campo puede ser una clave string (dict) o una posición (list)
         ret = self.factura
         for campo in campos:
             if isinstance(ret, dict) and isinstance(campo, str):
@@ -536,7 +536,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def CAESolicitarX(self):
-        "Autorizar m�ltiples facturas (CAE) en una �nica solicitud"
+        "Autorizar múltiples facturas (CAE) en una única solicitud"
         # Ver CompTotXRequest -> cantidad maxima comprobantes (250)
         # verificar que hay multiples facturas:
         if not self.facturas:
@@ -711,7 +711,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def CAEAConsultar(self, periodo, orden):
-        "M�todo de consulta de CAEA"
+        "Método de consulta de CAEA"
         ret = self.client.FECAEAConsultar(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
             Periodo=periodo,
@@ -736,7 +736,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def CAEARegInformativo(self):
-        "M�todo para informar comprobantes emitidos con CAEA"
+        "Método para informar comprobantes emitidos con CAEA"
         f = self.factura
         ret = self.client.FECAEARegInformativo(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
@@ -835,7 +835,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def CAEASinMovimientoInformar(self, punto_vta, caea):
-        "M�todo  para informar CAEA sin movimiento"
+        "Método  para informar CAEA sin movimiento"
         ret = self.client.FECAEASinMovimientoInformar(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
             PtoVta=punto_vta,
@@ -857,7 +857,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposCbte(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de Comprobantes"
+        "Recuperador de valores referenciales de códigos de Tipos de Comprobantes"
         ret = self.client.FEParamGetTiposCbte(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -867,7 +867,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposConcepto(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de Conceptos"
+        "Recuperador de valores referenciales de códigos de Tipos de Conceptos"
         ret = self.client.FEParamGetTiposConcepto(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -877,7 +877,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposDoc(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de Documentos"
+        "Recuperador de valores referenciales de códigos de Tipos de Documentos"
         ret = self.client.FEParamGetTiposDoc(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -887,7 +887,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposIva(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de Al�cuotas"
+        "Recuperador de valores referenciales de códigos de Tipos de Alícuotas"
         ret = self.client.FEParamGetTiposIva(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -897,7 +897,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposMonedas(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Monedas"
+        "Recuperador de valores referenciales de códigos de Monedas"
         ret = self.client.FEParamGetTiposMonedas(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -907,7 +907,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposOpcional(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de datos opcionales"
+        "Recuperador de valores referenciales de códigos de Tipos de datos opcionales"
         ret = self.client.FEParamGetTiposOpcional(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -917,8 +917,8 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposTributos(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Tipos de Tributos"
-        "Este m�todo permite consultar los tipos de tributos habilitados en este WS"
+        "Recuperador de valores referenciales de códigos de Tipos de Tributos"
+        "Este método permite consultar los tipos de tributos habilitados en este WS"
         ret = self.client.FEParamGetTiposTributos(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -928,8 +928,8 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetTiposPaises(self, sep="|"):
-        "Recuperador de valores referenciales de c�digos de Paises"
-        "Este m�todo permite consultar los tipos de tributos habilitados en este WS"
+        "Recuperador de valores referenciales de códigos de Paises"
+        "Este método permite consultar los tipos de tributos habilitados en este WS"
         ret = self.client.FEParamGetTiposPaises(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
         )
@@ -939,7 +939,7 @@ class WSFEv1(BaseWS):
 
     @inicializar_y_capturar_excepciones
     def ParamGetCotizacion(self, moneda_id):
-        "Recuperador de cotizaci�n de moneda"
+        "Recuperador de cotización de moneda"
         ret = self.client.FEParamGetCotizacion(
             Auth={'Token': self.Token, 'Sign': self.Sign, 'Cuit': self.Cuit},
             MonId=moneda_id,
@@ -965,7 +965,7 @@ def p_assert_eq(a, b):
 
 
 def main():
-    "Funci�n principal de pruebas (obtener CAE)"
+    "Función principal de pruebas (obtener CAE)"
     import os
     import time
 
@@ -1036,12 +1036,12 @@ def main():
         imp_op_ex = "0.00"
         fecha_cbte = fecha
         fecha_venc_pago = fecha_serv_desde = fecha_serv_hasta = None
-        # Fechas del per�odo del servicio facturado y vencimiento de pago:
+        # Fechas del período del servicio facturado y vencimiento de pago:
         if concepto > 1:
             fecha_venc_pago = fecha
             fecha_serv_desde = fecha; fecha_serv_hasta = fecha
         elif '--fce' in sys.argv:
-            # obligatorio en Factura de Cr�dito Electr�nica MiPyMEs (FCE):
+            # obligatorio en Factura de Crédito Electrónica MiPyMEs (FCE):
             fecha_venc_pago = fecha
         moneda_id = 'PES'; moneda_ctz = '1.000'
 
@@ -1068,13 +1068,13 @@ def main():
                 wsfev1.EstablecerCampoFactura("caea", caea)
                 wsfev1.EstablecerCampoFactura("fecha_hs_gen", "yyyymmddhhmiss")
 
-            # comprobantes asociados (notas de cr�dito / d�bito)
+            # comprobantes asociados (notas de crédito / débito)
             if tipo_cbte in (2, 3, 7, 8, 12, 13, 203, 208, 213):
                 tipo = 201 if tipo_cbte in (203, 208, 213) else 3
                 pto_vta = 4001
                 nro = 1
                 cuit = "20267565393"
-                # obligatorio en Factura de Cr�dito Electr�nica MiPyMEs (FCE):
+                # obligatorio en Factura de Crédito Electrónica MiPyMEs (FCE):
                 fecha_cbte = fecha if tipo_cbte in (203, 208, 213) else None
                 wsfev1.AgregarCmpAsoc(tipo, pto_vta, nro, cuit, fecha_cbte)
 
@@ -1111,7 +1111,7 @@ def main():
                 wsfev1.AgregarOpcional(5, "02")             # IVA Excepciones
                 wsfev1.AgregarOpcional(61, "80")            # Firmante Doc Tipo
                 wsfev1.AgregarOpcional(62, "20267565393")   # Firmante Doc Nro
-                wsfev1.AgregarOpcional(7, "01")             # Car�cter del Firmante
+                wsfev1.AgregarOpcional(7, "01")             # Carácter del Firmante
             # datos opcionales para RG 4004-E Alquiler de inmuebles (Ganancias)
             if '--rg4004' in sys.argv:
                 wsfev1.AgregarOpcional(17, "1")             # Intermediario
@@ -1122,14 +1122,14 @@ def main():
                 wsfev1.AgregarComprador(80, "30500010912", 99.99)
                 wsfev1.AgregarComprador(80, "30999032083", 0.01)
 
-            # datos de Factura de Cr�dito Electr�nica MiPyMEs (FCE):
+            # datos de Factura de Crédito Electrónica MiPyMEs (FCE):
             if '--fce' in sys.argv:
                 wsfev1.AgregarOpcional(2101, "2850590940090418135201")  # CBU
                 wsfev1.AgregarOpcional(2102, "pyafipws")               # alias
                 if tipo_cbte in (203, 208, 213):
-                    wsfev1.AgregarOpcional(22, "S")  # Anulaci�n
+                    wsfev1.AgregarOpcional(22, "S")  # Anulación
 
-            # agregar la factura creada internamente para solicitud m�ltiple:
+            # agregar la factura creada internamente para solicitud múltiple:
             if "--multiple" in sys.argv:
                 wsfev1.AgregarFacturaX()
 
@@ -1313,7 +1313,7 @@ def main():
                 print(error)
 
 
-# busco el directorio de instalaci�n (global para que no cambie si usan otra dll)
+# busco el directorio de instalación (global para que no cambie si usan otra dll)
 INSTALL_DIR = WSFEv1.InstallDir = get_install_dir()
 
 
