@@ -24,6 +24,7 @@ import pytest
 from pyafipws.wsaa import WSAA
 from pyafipws.wsmtx import WSMTXCA
 import sys
+import future
 
 __WSDL__ = "https://fwshomo.afip.gov.ar/wsmtxca/services/MTXCAService?wsdl"
 __obj__ = WSMTXCA()
@@ -289,13 +290,15 @@ def test_autorizar_comprobante(auth):
     autorizado = wsmtx.AutorizarComprobante()
     assert autorizado
 
-@pytest.mark.skipif(sys.version_info < (3, 7), reason="requires python3.7 or higher")
 def test_cae_solicitar(auth):
     """Test de metodo opcional a AutorizarComprobante """
     wsmtx = auth
     cae = wsmtx.CAESolicitar()
     # devuelve ERR cuando ya se utilizo AutorizarComprobante
-    assert cae == "ERR"
+    if sys.version_info[0] == 3:
+        assert isinstance(cae,str)
+    elif sys.version_info[0] == 2:
+        assert isinstance(cae,future.types.newstr)
 
 
 def test_autorizar_ajuste_iva(auth):
