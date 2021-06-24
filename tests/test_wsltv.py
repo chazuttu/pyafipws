@@ -373,5 +373,7 @@ def test_mostrar_pdf(auth):
     if pdf:
         with open("liq.pdf", "wb") as f:
             f.write(pdf)
-    show = wsltv.MostrarPDF(archivo="liq.pdf", imprimir=False)
-    assert show is True
+
+    show = wsltv.MostrarPDF(archivo="liq.pdf", imprimir=True)
+
+    assert show is False

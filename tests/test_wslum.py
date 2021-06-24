@@ -351,5 +351,7 @@ def test_mostrar_pdf(auth):
     if pdf:
         with open("liq.pdf", "wb") as f:
             f.write(pdf)
-    pdf_ok = wslum.MostrarPDF(archivo = "liq.pdf", imprimir = False)
-    assert pdf_ok is True
+
+    show = wslum.MostrarPDF(archivo="liq.pdf", imprimir=True)
+
+    assert show is False
