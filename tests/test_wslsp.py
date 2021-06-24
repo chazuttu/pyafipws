@@ -443,5 +443,5 @@ def test_consultar_puntos_ventas(auth):
 def test_mostrar_pdf(auth):
     """Test mostrar pdf."""
     wslsp=auth
-    show = wslsp.MostrarPDF(archivo="liq.pdf", imprimir=True)
-    assert show is False
+    show = wslsp.MostrarPDF(archivo="liq.pdf", imprimir=False)
+    assert show is True
