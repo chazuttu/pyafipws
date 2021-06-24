@@ -844,7 +844,8 @@ class WSLTV(BaseWS):
     def MostrarPDF(self, archivo, imprimir=False):
         try:
             if sys.platform == "linux2":
-                os.system("evince " "%s" "" % archivo)
+                opener = "xdg-open"
+                subprocess.call([opener,archivo])
             else:
                 operation = imprimir and "print" or ""
                 os.startfile(archivo, operation)

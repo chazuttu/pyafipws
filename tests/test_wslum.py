@@ -347,7 +347,7 @@ def test_consultar_puntos_ventas(auth):
 def test_mostrar_pdf(auth):
     """Test mostrar pdf."""
     wslum=auth
-    archivo = "nota"
+    archivo = "liq.pdf"
     imprimir = False
     pdf_ok = wslum.MostrarPDF(archivo, imprimir)
     assert pdf_ok is False
