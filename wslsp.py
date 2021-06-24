@@ -1033,7 +1033,7 @@ class WSLSP(BaseWS):
     def MostrarPDF(self, archivo, imprimir=False):
         try:
             if sys.platform == "linux2":
-                os.system("evince " "%s" "" % archivo)
+                os.system("xdg-open " "%s" "" % archivo)
             else:
                 operation = imprimir and "print" or ""
                 os.startfile(archivo, operation)
