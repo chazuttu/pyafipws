@@ -229,7 +229,7 @@ def test_parametros(auth):
     assert (wsfexv1.GetParamIdiomas())
     assert (wsfexv1.GetParamIncoterms())
     assert (wsfexv1.GetParamMonConCotizacion())
-    #assert (wsfexv1.GetParamPtosVenta())
+    assert (wsfexv1.GetParamPtosVenta()) == []
     if sys.version_info[0] == 3:
         assert isinstance(wsfexv1.GetParamCtz("DOL"),str)
     elif sys.version_info[0] == 2:

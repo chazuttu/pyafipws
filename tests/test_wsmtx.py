@@ -36,7 +36,7 @@ CERT = "reingart.crt"
 PKEY = "reingart.key"
 CACHE = ""
 
-pytestmark =pytest.mark.vcr
+pytestmark = pytest.mark.vcr
 
 
 
@@ -295,10 +295,7 @@ def test_cae_solicitar(auth):
     wsmtx = auth
     cae = wsmtx.CAESolicitar()
     # devuelve ERR cuando ya se utilizo AutorizarComprobante
-    if sys.version_info[0] == 3:
-        assert isinstance(cae,str)
-    elif sys.version_info[0] == 2:
-        assert isinstance(cae,future.types.newstr)
+    assert cae == "ERR"
 
 
 def test_autorizar_ajuste_iva(auth):
