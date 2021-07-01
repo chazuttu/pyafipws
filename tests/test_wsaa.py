@@ -19,7 +19,10 @@ __license__ = "GPL 3.0"
 import pytest
 import os
 import sys
+import base64
 from pyafipws.wsaa import WSAA
+from past.builtins import basestring
+from builtins import str
 from pyafipws.utils import *
 from pysimplesoap import *
 DEFAULT_TTL = 60 * 60 * 5  # five hours
@@ -61,7 +64,7 @@ def test_crear_pedido_certificado():
     assert chk1==True
     assert chk2==True
 
-@pytest.mark.xfail
+
 def test_expirado():
     """Revisar si el TA se encuentra vencido."""
     wsaa=WSAA()
@@ -114,6 +117,68 @@ def test_login_cms(key_and_cert):
     assert "<sign>" in ta_xml
     assert ta_xml.endswith("</loginTicketResponse>\n")
 
+def test_wsaa_create_tra():
+    wsaa = WSAA()
+    tra = wsaa.CreateTRA(service="wsfe")
 
+    # sanity checks:
+    assert isinstance(tra, basestring)
+    assert tra.startswith(
+        '<?xml version="1.0" encoding="UTF-8"?>' '<loginTicketRequest version="1.0">'
+    )
+    assert "<uniqueId>" in tra
+    assert "<expirationTime>" in tra
+    assert "<generationTime>" in tra
+    assert tra.endswith("<service>wsfe</service></loginTicketRequest>")
+
+
+def test_wsaa_sign():
+    wsaa = WSAA()
+    tra = '<?xml version="1.0" encoding="UTF-8"?><loginTicketRequest version="1.0"/>'
+    # TODO: use certificate and private key as fixture / PEM text (not files)
+    cms = wsaa.SignTRA(tra, "reingart.crt", "reingart.key")
+    # TODO: return string
+    if not isinstance(cms, str):
+        cms = cms.decode("utf8")
+    # sanity checks:
+    assert isinstance(cms, str)
+    out = base64.b64decode(cms)
+    assert tra.encode("utf8") in out
+
+
+def test_wsaa_sign_tra(key_and_cert):
+    wsaa = WSAA()
+
+    tra = wsaa.CreateTRA("wsfe")
+    sign = wsaa.SignTRA(tra, key_and_cert[1], key_and_cert[0])
+
+    if not isinstance(sign,str):
+        sign = sign.decode('utf-8')
+
+    assert isinstance(sign, str)
+    assert sign.startswith("MIIG+")
+
+
+def test_wsaa_sign_tra_inline(key_and_cert):
+    wsaa = WSAA()
+
+    tra = wsaa.CreateTRA("wsfe")
+    sign = wsaa.SignTRA(tra, key_and_cert[1], key_and_cert[0])
+
+    sign_2 = wsaa.SignTRA(
+        tra, open(key_and_cert[1]).read(), open(key_and_cert[0]).read()
+    )
+
+    if not isinstance(sign,str):
+        sign = sign.decode('utf-8')
+
+    if not isinstance(sign_2,str):
+        sign_2 = sign_2.decode('utf-8')
+
+    assert isinstance(sign, str)
+    assert sign.startswith("MIIG+")
+
+    assert isinstance(sign_2, str)
+    assert sign_2.startswith("MIIG+")
 
 
