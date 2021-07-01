@@ -1,0 +1,35 @@
+[run]
+
+omit = 
+        *cot*
+        *iibb*
+        *nsis*
+        *padron*
+        *pyemail*
+        *pyfepdf*
+        *pyi25*
+        *pyqr*
+        *rece1*
+        *receb1*
+        *recem*
+        *recet*
+        *recex1*
+        *rg3685*
+        *setup_win*
+        *sired*
+        *setup*
+        *trazafito*
+        *trazamed*
+        *trazapromed*
+        *trazarenpre*
+        *trazavet*
+        *utils*
+        *wdigdepfiel*
+        *ws_sire*
+        *wsoc*
+        *wsctg*
+        *wsfecred*
+        *wsplg*
+        *wslpg_datos*
+        *wsremazucar*
+        *wsremharina*       
