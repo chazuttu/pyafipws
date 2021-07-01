@@ -69,7 +69,10 @@ def test_expirado():
     """Revisar si el TA se encuentra vencido."""
     wsaa=WSAA()
     #checking for expired certificate
-    chk=wsaa.AnalizarXml(xml=open(r"tests\\xml\\expired_ta.xml", "r").read())
+    script_dir = os.path.dirname(__file__)
+    file_path = os.path.join(script_dir, 'xml/expired_ta.xml')  
+
+    chk=wsaa.AnalizarXml(xml=open(file_path, "r").read())
     chk2=wsaa.Expirado()
 
     #checking for a valid certificate,i.e. which will 
