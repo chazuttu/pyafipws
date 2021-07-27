@@ -1135,6 +1135,7 @@ def main():
                 assert wsltv.GetParametro("emisor", "domicilio") == u"Peru 100"
                 assert wsltv.GetParametro("emisor", "razon_social") == u"JOCKER"
                 assert wsltv.GetParametro("receptor", "domicilio") == u"Calle 1"
+                print(wsltv.GetParametro("receptor", "razon_social"))
                 if sys.version > '3':                    
                     assert (
                         wsltv.GetParametro("receptor", "razon_social")
