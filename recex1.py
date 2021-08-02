@@ -383,7 +383,7 @@ def main():
             # sys.exit(0)
 
         if "/formato" in sys.argv:
-            from .formatos import formato_dbf 
+            from pyafipws.formatos import formato_dbf 
 
             print("Formato:")
             for msg, formato in [
