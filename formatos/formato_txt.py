@@ -259,12 +259,13 @@ def escribir_linea_txt(dic, formato):
 
 def leer(fn="entrada.txt"):
     "Analiza un archivo TXT y devuelve un diccionario"
-    f_entrada = open(fn, "rb")
+    f_entrada = open(fn, "r")
     try:
         regs = []
         reg = None
         for linea in f_entrada:
-            linea = str(linea, CHARSET)
+            if not isinstance(linea,str):
+                linea = str(linea, CHARSET)
             if str(linea[0]) == "0":
                 encabezado = leer_linea_txt(linea, ENCABEZADO)
                 reg = encabezado
