@@ -53,6 +53,10 @@ jobs:
       run: |
         pytest --html=report.html --self-contained-html
 
+    - name: Remove test support files
+      run: |
+        sudo rm facturas.txt
+
     - name: Upload chk.txt
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
