@@ -53,12 +53,12 @@ jobs:
       run: |
         pytest --html=report.html --self-contained-html
 
-    - name: Upload facturas.txt
+    - name: Upload chk.txt
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
       with:
-        name: facturas.txt
-        path: facturas.txt
+        name: chk.txt
+        path: chk.txt
 
     - name: Upload test report
       uses: actions/upload-artifact@v2

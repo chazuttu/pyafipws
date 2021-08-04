@@ -307,6 +307,7 @@ def test_main_grabar():
     sys.argv.append("--grabar")
     # sys.argv.append("--debug")
     main()
+    shutil.copy('facturas.txt', 'chk.txt')
     assert filecmp.cmp('facturas.txt', 'tests/facturas.txt')
 
 def test_main_grabar_json():
