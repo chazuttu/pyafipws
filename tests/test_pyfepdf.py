@@ -309,7 +309,7 @@ def test_main_grabar():
     # sys.argv.append("--debug")
     main()
     shutil.copy('facturas.txt', 'chk.txt')
-    f1 = open("facturas.txt", "rb")
+    f1 = open("facturas.txt", "r")
     f2 = open("tests/facturas.txt", "rb")
     d1 = f1.readlines()
     d2 = f2.readlines()
