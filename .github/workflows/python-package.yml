@@ -51,7 +51,7 @@ jobs:
         sudo cp conf/rece.ini rece.ini
     - name: Test with pytest
       run: |
-        pytest --html=report.html --self-contained-html
+        pytest -vv --html=report.html --self-contained-html
 
     - name: Remove test support files
       run: |
