@@ -307,15 +307,7 @@ def test_main_grabar():
     sys.argv.append("--grabar")
     # sys.argv.append("--debug")
     main()
-    shutil.copy('facturas.txt', 'chk.txt')
-    f1 = open("facturas.txt", "rb")
-    f2 = open("tests/facturas.txt", "rb")
-    d1 = f1.readlines()
-    d2 = f2.readlines()
-    f1.close()
-    f2.close()
-    diff = [x for x in d1 if x not in d2]
-    assert diff == []
+    assert filecmp.cmp('facturas.txt', 'tests/facturas.txt')
 
 def test_main_grabar_json():
     sys.argv = []
