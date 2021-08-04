@@ -264,8 +264,8 @@ def leer(fn="entrada.txt"):
         regs = []
         reg = None
         for linea in f_entrada:
-            if not isinstance(linea,str):
-                linea = str(linea, CHARSET)
+            # if not isinstance(linea,str):
+            #     linea = str(linea, CHARSET)
             if str(linea[0]) == "0":
                 encabezado = leer_linea_txt(linea, ENCABEZADO)
                 reg = encabezado
