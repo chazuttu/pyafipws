@@ -1963,7 +1963,7 @@ def main():
 
             # descuento general (a tasa 21%):
             u_mtx = cod_mtx = codigo = None
-            ds = u'Bonificaci\xf3n/Descuento 10%'
+            ds = u"Bonificación/Descuento 10%"
             qty = precio = bonif = None
             umed = 99
             iva_id = 5
