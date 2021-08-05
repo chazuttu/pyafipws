@@ -28,6 +28,7 @@ from builtins import str
 from pyafipws.utils import SafeConfigParser
 import shutil
 import filecmp
+import unicodedata
 
 CERT = "reingart.crt"
 PKEY = "reingart.key"
@@ -308,8 +309,14 @@ def test_main_grabar():
     sys.argv.append("--grabar")
     # sys.argv.append("--debug")
     main()
-    shutil.copy('facturas.txt', 'chk.txt')
-    assert filecmp.cmp('facturas.txt', 'tests/facturas.txt')
+    f1 = open("facturas.txt",  encoding="utf-8", errors="ignore")
+    f2 = open("tests/facturas.txt",  encoding='utf-8', errors="ignore")
+    d1 = f1.readlines()
+    d2 = f2.readlines()
+    f1.close()
+    f2.close()
+    diff = [x for x in d1 if unicodedata.normalize('NFC',x) not in d2]
+    assert diff == []
 
 def test_main_grabar_json():
     sys.argv = []
