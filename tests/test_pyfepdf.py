@@ -311,18 +311,19 @@ def test_main_cargar_json():
 def test_main_grabar():
     sys.argv = []
     sys.argv.append("--prueba")
+    sys.argv.append("--fecha_prueba")
     sys.argv.append("--grabar")
     # sys.argv.append("--debug")
     main()
     #TO-DO : compare the generated facturas.txt with the original file
-    # f1 = open("facturas.txt", "r")
-    # f2 = open("tests/facturas.txt", "r")
-    # d1 = f1.readlines()
-    # d2 = f2.readlines()
-    # f1.close()
-    # f2.close()
-    # diff = [x for x in d1 if x not in d2]
-    # assert diff == []
+    f1 = open("facturas.txt", "r")
+    f2 = open("tests/facturas.txt", "r")
+    d1 = f1.readlines()
+    d2 = f2.readlines()
+    f1.close()
+    f2.close()
+    diff = [x for x in d1 if x not in d2]
+    assert diff == []
 
 
 def test_main_grabar_json():
