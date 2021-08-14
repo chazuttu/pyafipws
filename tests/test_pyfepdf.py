@@ -317,7 +317,10 @@ def test_main_grabar():
     main()
     #TO-DO : compare the generated facturas.txt with the original file
     f1 = open("facturas.txt", "r")
-    f2 = open("tests/facturas.txt", "r")
+    if sys.version_info[0] < 3:
+        f2 = open("tests/facturas_py2.txt", "r")
+    else:
+        f2 = open("tests/facturas.txt", "r")
     d1 = f1.readlines()
     d2 = f2.readlines()
     f1.close()
