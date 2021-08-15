@@ -20,7 +20,7 @@ import os
 import sys
 import datetime
 import pytest
-from io import open
+# from io import open
 from pyafipws.wsaa import WSAA
 from pyafipws.pyfepdf import FEPDF
 from pyafipws.pyfepdf import main
