@@ -317,13 +317,15 @@ def test_main_grabar():
     # sys.argv.append("--debug")
     main()
     #TO-DO : compare the generated facturas.txt with the original file
-    f1 = open("facturas.txt", "r", encoding="latin1")
+    f1 = open("facturas.txt", "r")
     if sys.version_info[0] < 3:
-        f2 = open("tests/facturas_py2.txt", "r", encoding="latin1")
+        f2 = open("tests/facturas_py2.txt", "r")
     else:
-        f2 = open("tests/facturas.txt", "r",encoding="latin1")
+        f2 = open("tests/facturas.txt", "r")
     d1 = f1.readlines()
     d2 = f2.readlines()
+    d2 = [d.replace("\xc2", "") for d in d2]
+    d2 = [d.replace("\xc3\xb3", "\xf3") for d in d2]
     f1.close()
     f2.close()
     diff1 = [x for x in d2 if x not in d1]
