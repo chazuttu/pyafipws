@@ -328,8 +328,8 @@ def test_main_grabar():
     f2.close()
     diff1 = [x for x in d2 if x not in d1]
     diff2 = [x for x in d1 if x not in d2]
-    assert diff1 == []
     assert diff2 == []
+    assert diff1 == []
 
 
 def test_main_grabar_json():
